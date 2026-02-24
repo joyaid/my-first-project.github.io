@@ -1,0 +1,204 @@
+:root {
+    --bg-black: #000000;
+    --accent-purple: #a855f7;
+    --text-white: #ffffff;
+    --text-gray: #9ca3af;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --anim-curve: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Атмосфера (Сетка и Свечение) --- */
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: -2;
+}
+
+.glow {
+    position: fixed;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: -1;
+    opacity: 0.4;
+}
+
+.glow-1 {
+    background: radial-gradient(circle, #4c1d95, transparent);
+    top: -150px;
+    left: -150px;
+}
+
+.glow-2 {
+    background: radial-gradient(circle, #2e1065, transparent);
+    bottom: -200px;
+    right: -150px;
+}
+
+/* --- Навигация и Shimmer --- */
+.nav-wrapper {
+    position: fixed;
+    top: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+    z-index: 100;
+    animation: slideDown 1s var(--anim-curve);
+}
+
+.navbar {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 14px 40px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 15px;
+}
+
+.shimmer-text {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 6px;
+    text-transform: lowercase;
+    background: linear-gradient(90deg, #222 0%, #fff 50%, #222 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3.5s linear infinite;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-gray);
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.nav-links a.active, .nav-links a:hover { color: #fff; }
+
+/* --- Центральная карточка (Фото 1) --- */
+.hero-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.hero-card {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    padding: 100px 40px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    overflow: hidden;
+    animation: scaleUp 1.2s var(--anim-curve);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-card h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    letter-spacing: -2px;
+}
+
+.purple-text {
+    color: var(--accent-purple);
+    text-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
+}
+
+.cta-button {
+    background: white;
+    color: black;
+    border: none;
+    padding: 18px 45px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s var(--anim-curve), opacity 0.3s;
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Внутреннее пятно света в карточке */
+.card-glow {
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- Анимации --- */
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleUp { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+.reveal { animation: fadeInUp 1s var(--anim-curve) 0.5s forwards; opacity: 0; }
+.delay-1 { animation-delay: 0.7s; }
+
+@media (max-width: 768px) {
+    .navbar { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero-card { padding: 60px 20px; }
+}

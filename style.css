@@ -1,0 +1,229 @@
+/* --- Variables & Reset --- */
+:root {
+    --bg-black: #000000;
+    --accent-purple: #a855f7; /* Vibrant purple from Photo 1 */
+    --text-white: #ffffff;
+    --text-gray: #94a3b8;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --anim-curve: cubic-bezier(0.22, 1, 0.36, 1); /* Premium smooth curve */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+/* --- Background Atmosphere --- */
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.4;
+}
+
+.glow-1 {
+    background: radial-gradient(circle, #4c1d95, transparent);
+    top: -100px;
+    left: -100px;
+}
+
+.glow-2 {
+    background: radial-gradient(circle, #2e1065, transparent);
+    bottom: -150px;
+    right: -100px;
+}
+
+/* --- Floating Navbar --- */
+.nav-wrapper {
+    position: fixed;
+    top: 24px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+    animation: slideDown 1s var(--anim-curve);
+}
+
+.navbar {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    padding: 12px 32px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.logo {
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 14px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-gray);
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: var(--text-white);
+}
+
+/* --- Content Layout --- */
+.container {
+    max-width: 1100px;
+    margin: 180px auto 100px;
+    padding: 0 24px;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+}
+
+.purple-accent {
+    color: var(--accent-purple);
+    /* Adding a subtle glow to the purple text like Photo 1 */
+    text-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+}
+
+.description {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto 80px;
+    line-height: 1.7;
+}
+
+/* --- Stats Cards --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+}
+
+.stat-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    padding: 50px 30px;
+    border-radius: 24px;
+    transition: all 0.4s var(--anim-curve);
+    opacity: 0; /* Hidden for animation */
+}
+
+.stat-card:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.stat-number {
+    font-size: 2.2rem;
+    color: var(--accent-purple);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.stat-text {
+    font-size: 0.95rem;
+    color: var(--text-white);
+    opacity: 0.8;
+}
+
+/* --- Button --- */
+.cta-button {
+    background: var(--text-white);
+    color: var(--bg-black);
+    border: none;
+    padding: 18px 48px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* --- Animations --- */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Applying staggered entry */
+.reveal-text {
+    animation: fadeInUp 1s var(--anim-curve) forwards;
+}
+
+.reveal-text-slow {
+    opacity: 0;
+    animation: fadeInUp 1s var(--anim-curve) 0.2s forwards;
+}
+
+.stat-card:nth-child(1) { animation: fadeInUp 1s var(--anim-curve) 0.4s forwards; }
+.stat-card:nth-child(2) { animation: fadeInUp 1s var(--anim-curve) 0.6s forwards; }
+.stat-card:nth-child(3) { animation: fadeInUp 1s var(--anim-curve) 0.8s forwards; }
+
+.button-wrapper {
+    opacity: 0;
+    animation: fadeInUp 1s var(--anim-curve) 1s forwards;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; } /* Hide links on mobile for simplicity */
+    .hero-section h1 { font-size: 2.5rem; }
+}
